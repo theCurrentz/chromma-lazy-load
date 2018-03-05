@@ -53,9 +53,8 @@ abstract class Chromma_Lazy_Load_Module
   							   $imgMatchModifiedsrc = preg_replace('/src=\".*\"/iU' , "src='{$srcMatchSub}{$srcMatchSubEnd}'", $imgMatch);
                    $imgMatchModified = str_replace("srcset=", "srcset='{$srcMatchSub}{$srcMatchSubEnd}' data-srcset=", $imgMatchModifiedsrc);
   							}
-
-  							$content = str_replace($imgMatch, "{$imgMatchModified}", $content);
               }
+              $content = str_replace($imgMatch, "{$imgMatchModified}", $content);
 					}
   		}
   		$content = str_replace('<img class="', '<img class="lazyload-img llreplace ', $content);
