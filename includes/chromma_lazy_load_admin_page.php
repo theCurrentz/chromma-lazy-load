@@ -86,6 +86,7 @@ function chromma_lazy_load_options() {
 	if(get_option('chromma_loadeffect') == 'fadein')
 	{
 		$scss_data = '.lazyload-img {
+			opacity: 0;
 			will-change: transform, opacity, filter;
 			perspective: 1000;
 			backface-visibility: hidden;
