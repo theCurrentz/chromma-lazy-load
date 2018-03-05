@@ -101,7 +101,6 @@ function chromma_lazy_load_options() {
 			opacity: 0;
 		}
 		.reveal {
-			opacity: 1;
 			animation-fill-mode: forwards;
 			animation-iteration-count: 1;
 			animation: reveal .6s ease-out;
