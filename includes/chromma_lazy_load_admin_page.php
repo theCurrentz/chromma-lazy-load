@@ -126,7 +126,8 @@ function chromma_lazy_load_options() {
 
 		//lazy load blur
 		.llreplace {
-			opacity: 0;
+			filter: blur(2vw);
+			-webkit-filter: blur(2vw);
 		}
 		.reveal {
 			filter: opacity(1) !important;
