@@ -18,7 +18,7 @@ abstract class Chromma_Lazy_Load_Module
 					{
               if($load_effect == 'fadein')
               {
-                $imgMatchModifiedsrc = preg_replace('/src=\".*\"/iU' , "src=''", $imgMatch);
+                $imgMatchModifiedsrc = preg_replace('/src=\".*\"/iU' , "data-src='{$srcMatch}'", $imgMatch);
                 $imgMatchModified = str_replace("srcset=", "srcset='' data-srcset=", $imgMatchModifiedsrc);
               }
               else
@@ -44,7 +44,7 @@ abstract class Chromma_Lazy_Load_Module
                 //if src is a gif, do not to attach lowest dimension modifer
   							if ($srcMatchGif !== false)
   							{
-  								$imgMatchModifiedsrc = preg_replace('/src=\".*\"/iU' , "src='{$srcMatch}'", $imgMatch);
+  								$imgMatchModifiedsrc = preg_replace('/src=\".*\"/iU' , "src='{$srcMatch}' data-src='{$srcMatch}'", $imgMatch);
                   $imgMatchModified = str_replace("srcset=", "srcset='{$srcMatchSub}{$srcMatchSubEnd}' data-srcset=", $imgMatchModifiedsrc);
   							}
                 //otherwise
