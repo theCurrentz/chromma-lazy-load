@@ -39,27 +39,30 @@ function inView(element) {
 }
 
 //replace src w/ data src and animate image in
-function lazyLoadImage(element) {
-    if (element.getAttribute("data-src")) {
-        if (element.classList) {
-            element.classList.add("reveal");
-        }
+function lazyLoadImage(element)
+{
+    if (element.getAttribute("data-src"))
+    {
         element.setAttribute("src", element.getAttribute("data-src"));
         element.removeAttribute("data-src");
     }
-    if (element.getAttribute("data-srcset")) {
-        if (element.classList) {
-            element.classList.add("reveal");
-        }
+    if (element.getAttribute("data-srcset"))
+    {
         element.setAttribute("srcset", element.getAttribute("data-srcset"));
         element.removeAttribute("data-srcset");
+    }
+    if ((element.getAttribute("data-src") || element.getAttribute("data-srcset")) && element.classList)
+    {
         //use below code if using a container e.g. filter
         // element.style.position = "relative";
         // element.style.height = "auto";
         // element.parentNode.style.height = "auto";
         // element.parentNode.style.paddingBottom = "0px";
+        element.classList.add("reveal");
     }
 }
 
-
-lazyLoadController();
+//fire when dom content is loaded
+document.addEventListener("DOMContentLoaded", function() {
+  lazyLoadController();
+});
