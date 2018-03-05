@@ -18,7 +18,8 @@ abstract class Chromma_Lazy_Load_Module
 					{
               if($load_effect == 'fadein')
               {
-                $imgMatchModifiedsrc = preg_replace('/src=\".*\"/iU' , "data-src='{$srcMatch}'", $imgMatch);
+                $data_src = "data-src='".$srcMatch['src']."'";
+                $imgMatchModifiedsrc = preg_replace('/src=\".*\"/iU' , $data_src, $imgMatch);
                 $imgMatchModified = str_replace("srcset=", "srcset='' data-srcset=", $imgMatchModifiedsrc);
               }
               else
