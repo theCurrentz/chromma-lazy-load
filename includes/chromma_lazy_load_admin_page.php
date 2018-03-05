@@ -101,14 +101,9 @@ function chromma_lazy_load_options() {
 			opacity: 0;
 		}
 		.reveal {
-			animation-fill-mode: forwards;
-			animation-iteration-count: 1;
-			animation: reveal .6s ease-out;
+			transition: reveal .8s ease-out;
+			opacity: 1;
 		}
-		@keyframes reveal {
-			0% {opacity: 0;}
-			100% {opacity: 1;}
-		}';
 	}
 	elseif(get_option('chromma_loadeffect') == 'blur')
 	{
