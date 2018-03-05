@@ -46,7 +46,8 @@ function lazyLoadImage(element) {
         }
         element.setAttribute("src", element.getAttribute("data-src"));
         element.removeAttribute("data-src");
-    } else if (element.getAttribute("data-srcset")) {
+    }
+    if (element.getAttribute("data-srcset")) {
 
         if (element.classList) {
             element.classList.add("reveal");
