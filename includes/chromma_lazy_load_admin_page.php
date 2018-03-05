@@ -101,7 +101,7 @@ function chromma_lazy_load_options() {
 			opacity: 0;
 		}
 		.reveal {
-			transition: reveal .8s ease-out;
+			transition: opacity .8s ease-out;
 			opacity: 1;
 		}';
 	}
