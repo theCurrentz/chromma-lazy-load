@@ -104,7 +104,7 @@ function chromma_lazy_load_options() {
 			transition: reveal .8s ease-out;
 			opacity: 1;
 		}
-	}
+	}';
 	elseif(get_option('chromma_loadeffect') == 'blur')
 	{
 		$scss_data = '.lazyload-img {
