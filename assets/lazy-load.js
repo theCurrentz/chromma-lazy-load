@@ -48,16 +48,16 @@ function lazyLoadImage(element) {
         element.removeAttribute("data-src");
     }
     if (element.getAttribute("data-srcset")) {
-
         if (element.classList) {
             element.classList.add("reveal");
         }
         element.setAttribute("srcset", element.getAttribute("data-srcset"));
         element.removeAttribute("data-srcset");
-        element.style.position = "relative";
-        element.style.height = "auto";
-        element.parentNode.style.height = "auto";
-        element.parentNode.style.paddingBottom = "0px";
+        //use below code if using a container e.g. filter
+        // element.style.position = "relative";
+        // element.style.height = "auto";
+        // element.parentNode.style.height = "auto";
+        // element.parentNode.style.paddingBottom = "0px";
     }
 }
 
