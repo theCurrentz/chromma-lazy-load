@@ -9,33 +9,11 @@ NOT LICENSED
 */
 
 //require lazy load abstract class
-require_once( plugin_dir_path( __FILE__ ) . '/classes/chromma-lazy-load-abstract.php');
+require_once( plugin_dir_path( __FILE__ ) . '/classes/chromma-lazy-load-module.php');
 
+//require lazy load admin page
+require_once( plugin_dir_path( __FILE__ ) . '/includes/chromma_lazy_load_admin_page.php');
 
-/*
-How To Use.
-Note that by default the filter doesn't work on all content, only where applied in the codebase
-
-Using PHP filter
-e.g.
-if (class_exists('Chromma_Lazy_Load_Abstract'))
-{
-  add_filter( 'the_content', 'Chromma_Lazy_Load_Abstract::content_lazyload_filter' );
-}
-
-
-Using js
-The included js will fire on any image where the llreplace css class exists, therefore the developer can apply this class at their discretion
-The included js is not automatically enqueued, therefore the developer will have to pull it into their workflow however they choose
-e.g. gulp:
-const lazyload = '../../plugins/chromma-lazy-load/assets/lazy-load.js';
-gulp.task('js', function() {
-    return gulp
-        .src([lazyload, jQuery, './js/script.js'])
-        .pipe(concat('myscript.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./assets/js/'));
-});
-
-scss file is also included as a styling template.
-*/
+//require functions to get thumbnail dimensions
+//@src https://codex.wordpress.org/Function_Reference/get_intermediate_image_sizes
+require_once( plugin_dir_path( __FILE__ ) . '/includes/get-image-sizes.php');

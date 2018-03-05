@@ -1,10 +1,11 @@
 <?php
 //abstract interface for chromma lazy load
-abstract class Chromma_Lazy_Load_Abstract
+abstract class Chromma_Lazy_Load_Module
 {
-
   public static function content_lazyload_filter( $content )
   {
+      $load_effect = get_option( 'chromma_loadeffect' );
+      (get_option( 'chromma_loadeffect' ) !== "fadein") ? $lowest_dimension_mod = get_option('chromma-load-dimensions') : $lowest_dimension_mod = "";
   		preg_match_all('/<img .*>/iU', $content, $imgMatches);
 
   		foreach ($imgMatches[0] as $imgMatch)
@@ -15,9 +16,9 @@ abstract class Chromma_Lazy_Load_Abstract
   						//find replace sourcese with a data bound srcset
   						if (!empty($srcMatch['src']))
   						{
-                //default length of the format(e.g. .jpg) type suffix
+                //default length of the format(e.g. .jpg, .png) type suffix
                 $formatLength = 4;
-                //if jpeg, extend to 5
+                //if .jpeg, extend to 5
                 if(strpos($srcMatch['src'], 'jpeg') == true)
                 {
                   $formatLength = 5;
@@ -31,7 +32,7 @@ abstract class Chromma_Lazy_Load_Abstract
   							$srcMatchGif = strpos($srcMatch['src'], 'gif');
 
   							//attach the a modifier for lowest dimensions available to you directly before the format(e.g. .jpg) type suffix
-  							$srcMatchSubEnd = '-20x12' . substr( $srcMatch['src'], $srcMatchLength - $formatLength, ( $srcMatchLength ) );
+  							$srcMatchSubEnd = $lowest_dimension_mod . substr( $srcMatch['src'], $srcMatchLength - $formatLength, ( $srcMatchLength ) );
 
                 //if src is a gif, do not to attach lowest dimension modifer
   							if ($srcMatchGif !== false)
