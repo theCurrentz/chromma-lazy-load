@@ -12,6 +12,11 @@ function lazyLoadController() {
     });
     }
 
+    //fire when dom content is loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      lazyLoadExecutionScroll()
+    });
+
     //execute lazy load
     function lazyLoadExecutionScroll() {
         var imgCount = 0;
@@ -62,7 +67,4 @@ function lazyLoadImage(element)
     }
 }
 
-//fire when dom content is loaded
-document.addEventListener("DOMContentLoaded", function() {
-  lazyLoadController();
-});
+lazyLoadController();
