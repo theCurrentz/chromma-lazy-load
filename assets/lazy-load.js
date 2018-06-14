@@ -2,19 +2,14 @@ function lazyLoadController() {
     //lazyloading images
     var allimages = document.getElementsByClassName("llreplace");
     if (allimages.length > 0) {
-    for (var i = 0, j = allimages.length; i < j; i++) {
-      if (allimages[0].length > 0) {
-        allimages[0].addEventListener("load", lazyLoadExecutionScroll());
-      }
-    }
-    window.addEventListener("scroll", function() {
-        lazyLoadExecutionScroll();
-    });
+      window.addEventListener("scroll", function() {
+          lazyLoadExecutionScroll();
+      });
     }
 
     //fire when dom content is loaded
     document.addEventListener("DOMContentLoaded", function() {
-      lazyLoadExecutionScroll()
+      lazyLoadExecutionScroll();
     });
 
     //execute lazy load
@@ -22,6 +17,7 @@ function lazyLoadController() {
         var imgCount = 0;
         while (imgCount < allimages.length) {
             if (inView(allimages[imgCount])) {
+
                 lazyLoadImage(allimages[imgCount]);
                 allimages[imgCount].classList.remove("llreplace");
             } else {
@@ -46,23 +42,23 @@ function inView(element) {
 //replace src w/ data src and animate image in
 function lazyLoadImage(element)
 {
-    if (element.getAttribute("data-src"))
-    {
-        element.setAttribute("src", element.getAttribute("data-src"));
-        element.removeAttribute("data-src");
-    }
     if (element.getAttribute("data-srcset"))
     {
         element.setAttribute("srcset", element.getAttribute("data-srcset"));
         element.removeAttribute("data-srcset");
     }
-    //use below code if using a container e.g. filter
+    if (element.getAttribute("data-src"))
+    {
+        element.setAttribute("src", element.getAttribute("data-src"));
+        element.removeAttribute("data-src");
+    }
+    //use below code if using a container e.g. figure
     // element.style.position = "relative";
     // element.style.height = "auto";
     // element.parentNode.style.height = "auto";
     // element.parentNode.style.paddingBottom = "0px";
     if(element.classList)
-      element.classList.add("reveal");
+      element.classList.add("reveal")
 }
 
 lazyLoadController();

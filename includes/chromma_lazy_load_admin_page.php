@@ -23,32 +23,34 @@ function chromma_lazy_load_options() {
     //hidden field name
     $hidden_field_name = 'mt_submit_hidden';
 
-
     // Read in existing option value from database
     $option_chromma_loadeffect_val = get_option( 'chromma_loadeffect' );
 		$option_chromma_load_dimensions = get_option('chromma-load-dimensions');
+    $option_chromma_load_ar = get_option('chromma-load-ar');
 
     // See if the user has posted us some information
     // If they did, this hidden field will be set to 'Y'
-    if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' )
-    {
+    if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
         // Read their posted value
         $option_chromma_loadeffect_val =  $_POST[ 'chromma-loadeffect' ];
 				$option_chromma_load_dimensions = $_POST[ 'chromma-load-dimensions' ];
+        $option_chromma_load_ar = $_POST[ 'chromma-load-ar' ];
     }
 
     // Save the posted value in the database
     update_option( 'chromma_loadeffect', $option_chromma_loadeffect_val );
 		update_option( 'chromma-load-dimensions', $option_chromma_load_dimensions );
+    update_option( 'chromma-load-ar', $option_chromma_load_ar );
 
     //Put a "settings saved" message on the screen
   ?>
   <div class="updated"><p><strong><?php _e('settings saved.', 'menu-test' ); ?></strong></p></div>
   <?php
-	//ask for the currently set option choice
+	//ask for the currently set option choice, selected values will be evaluated to find the right option to select on page load
 	$selected_effect = get_option( 'chromma_loadeffect' );
 	$all_thumbnail_sizes = get_intermediate_image_sizes();
 	$selected_dimension = get_option('chromma-load-dimensions');
+  $selected_ar = get_option('chromma-load-ar');
 	?>
 
   <div class="wrap">
@@ -61,17 +63,27 @@ function chromma_lazy_load_options() {
             <option value="blur" <?php selected( $selected_effect, 'blur' ); ?>>Blur</option>
         </select>
 				<br/>
-				<label><strong>If using "blur" effect, please choose a low-res thumbnail size.</strong></label>&nbsp;
+				<label><strong>If using "blur" effect, please choose a low resolution thumbnail size here.</strong></label>&nbsp;
 				<select name="chromma-load-dimensions" id="chromma-load-dimensions">
-						<?php
-						foreach($all_thumbnail_sizes as $thumnail_size)
-						{
-							$thumnail_size_dimensions= get_image_size($thumnail_size);
-							$dimensions = "-".$thumnail_size_dimensions["width"].'x'.$thumnail_size_dimensions["height"];
-							echo '<option value="'.$dimensions.'"'.	selected( $selected_dimension, $dimensions ) .'>'.$thumnail_size.'  W: '.$thumnail_size_dimensions["width"].'  H: '.$thumnail_size_dimensions["height"].'</option>';
-						}
-						?>
+					<?php
+					foreach($all_thumbnail_sizes as $thumnail_size) {
+						$thumnail_size_dimensions= get_image_size($thumnail_size);
+						$dimensions = "-".$thumnail_size_dimensions["width"].'x'.$thumnail_size_dimensions["height"];
+						echo '<option value="'.$dimensions.'"'.	selected( $selected_dimension, $dimensions ) .'>'.$thumnail_size.'  W: '.$thumnail_size_dimensions["width"].'  H: '.$thumnail_size_dimensions["height"].'</option>';
+					}
+					?>
 				</select>
+        <br/>
+        <label><strong>Please choose an image dimension which will be used as the global apsect ratio setting.</strong></label>&nbsp;
+        <select name="chromma-load-ar" id="chromma-load-ar">
+          <?php
+          foreach($all_thumbnail_sizes as $thumnail_size) {
+            $thumnail_size_dimensions= get_image_size($thumnail_size);
+            $dimensions = "-".$thumnail_size_dimensions["width"].'x'.$thumnail_size_dimensions["height"];
+            echo '<option value="'.$dimensions.'"'.	selected( $selected_ar, $dimensions ) .'>'.$thumnail_size.'  W: '.$thumnail_size_dimensions["width"].'  H: '.$thumnail_size_dimensions["height"].'</option>';
+          }
+          ?>
+        </select>
         <div class="submit">
           <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
         </div>
