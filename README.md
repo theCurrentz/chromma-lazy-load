@@ -1,14 +1,11 @@
 # chromma-lazy-load
-PHP &amp; Javascript module that provides an elegant lazy loading image solution. Inspired by Medium, Spotify and Google Images.
-
-## How To Use.
-Note that by default the filter doesn't work on all content, only where applied in the codebase
+PHP &amp; Javascript component that provides an elegant lazy loading image solution. Inspired by Medium, Spotify and Google Images.
 
 ### Using PHP filter
 ```
-if (class_exists('Chromma_Lazy_Load_Abstract'))
+if (class_exists('Chromma_Lazy_Load_Module'))
 {
-  add_filter( 'the_content', 'Chromma_Lazy_Load_Abstract::content_lazyload_filter' );
+  add_filter( 'the_content', 'Chromma_Lazy_Load_Module::content_lazyload_filter' );
 }
 ```
 

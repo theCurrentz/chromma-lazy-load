@@ -95,6 +95,15 @@ function chromma_lazy_load_options() {
 	$lazyload_scss_file = plugin_dir_path( __FILE__ ) . '../assets/_lazyload.scss';
 	$handle = fopen($lazyload_scss_file, 'w') or die('Cannot open file:  '.$lazyload_scss_file);
 	$scss_data = '';
+
+  //parse out the desired dimensions and apply the dimensions as an aspect ratio to the figure
+  $aspect_ratio = get_option('chromma-load-ar');
+  $aspect_ratio = str_replace('x', ',', $aspect_ratio);
+  $aspect_ratio = str_replace('-', '', $aspect_ratio);
+  $aspect_ratio_array = explode(',', $aspect_ratio);
+  $width = $aspect_ratio_array[0];
+  $height = $aspect_ratio_array[1];
+
 	if(get_option('chromma_loadeffect') == 'fadein')
 	{
 		$scss_data = '.lazyload-img {
@@ -149,6 +158,49 @@ function chromma_lazy_load_options() {
 			100% {filter: blur(0); -webkit-filter: blur(0);}
 		}';
 	}
+  $scss_data = $scss_data . '.entry-content_figure {
+        width: 100%;
+        height: auto;
+        margin: 8px auto 18px;
+        position: relative;
+        background: whitesmoke;
+        img {
+          display: block;
+          margin: 0px auto;
+          width: 100%;
+          height: 100%;
+          max-width: 100%;
+          max-height: 100%;
+          position: absolute;
+          z-index: 1;
+          left: 0px;
+          right: 0px;
+          top: 0px;
+          bottom: 0px;
+          color: #fff;
+          font-size: 1rem;
+          text-align: center;
+        }
+      }
+      .fig-wcaption {
+        overflow: hidden;
+        max-width: '.$width.'px;
+        max-height: calc('.$height.'px - 22px);
+        background: whitesmoke;
+        img {
+          position: relative;
+          height: auto;
+        }
+      }
+      .figcaption {
+        color: $light-grey;
+        font-size: .782rem;
+        width: 100%;
+        padding: 8px 2% 0px;
+        margin: 0px;
+        min-height: 30px;
+        background: #fff;
+      }';
 	fwrite($handle, $scss_data);
 	fclose($handle);
 }
