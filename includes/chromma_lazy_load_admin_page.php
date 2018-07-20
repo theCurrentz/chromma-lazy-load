@@ -93,7 +93,7 @@ function chromma_lazy_load_options() {
 
 <?php
 	//write scss to file based on option $selected
-	$lazyload_scss_file = plugin_dir_path( __FILE__ ) . '../src/_lazyload.scss';
+	$lazyload_scss_file = plugin_dir_path( __DIR__ ) . 'src/_lazyload.scss';
 	$handle = fopen($lazyload_scss_file, 'w') or die('Cannot open file:  '.$lazyload_scss_file);
 	$scss_data = '';
 

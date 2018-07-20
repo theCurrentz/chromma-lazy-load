@@ -29,10 +29,13 @@ class Chromma_Lazy_Load_Module {
   }
 
   public static function content_lazyload_filter( $content ) {
+
+    libxml_use_internal_errors(true);
     //initialize a dom document for easier more accurate parsing
     $content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
     $dom = new DOMDocument();
     $dom->loadHTML($content);
+
     $dom->encoding = 'utf-8';
     $xpath = new DOMXpath($dom);
     //xpath query targets all images that are children of the div css class entry-content

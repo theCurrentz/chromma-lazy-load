@@ -1,5 +1,4 @@
 .lazyload-img {
-			opacity: 0;
 			will-change: transform, opacity, filter;
 			perspective: 1000;
 			backface-visibility: hidden;
@@ -10,27 +9,35 @@
 			image-rendering: -webkit-optimize-contrast;
 		}
 
-		//lazy load fade in
+		//lazy load blur
 		.llreplace {
-			opacity: 0;
+			filter: blur(2vw);
+			-webkit-filter: blur(2vw);
 		}
 		.reveal {
-			transition: opacity .8s ease-out;
-			opacity: 1;
+			filter: opacity(1) !important;
+			-webkit-filter: opacity(1) !important;
+			animation-fill-mode: forwards;
+			animation-iteration-count: 1;
+			animation: reveal .6s ease-out;
 		}
-    .entry-content_figure {
+
+		@keyframes reveal {
+			0% {filter: blur(2vw); -webkit-filter: blur(2vw);}
+			100% {filter: blur(0); -webkit-filter: blur(0);}
+		}.entry-content_figure {
         width: 100%;
         height: auto;
         margin: 8px auto 18px;
         position: relative;
-        background: #f9f9f9;
-        overflow: hidden;
+        background: whitesmoke;
         img {
           display: block;
           margin: 0px auto;
           width: 100%;
           height: 100%;
           max-width: 100%;
+          max-height: 100%;
           position: absolute;
           z-index: 1;
           left: 0px;
@@ -44,11 +51,10 @@
       }
       .fig-wcaption {
         overflow: hidden;
-        max-width: 812px;
-        max-height: 100%;
-        background: #f9f9f9;
+        max-width: 1000px;
+        max-height: calc(600px - 22px);
+        background: whitesmoke;
         img {
-          max-height: 457px;
           position: relative;
           height: auto;
         }
