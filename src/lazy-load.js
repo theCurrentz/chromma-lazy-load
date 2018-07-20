@@ -1,7 +1,9 @@
 // fire when dom content is loaded
+console.log("TEST")
 if(document.getElementsByClassName('llreplace').length > 0) {
   var allimages = document.getElementsByClassName('llreplace')
   allimages[allimages.length - 1].addEventListener('load', lazyLoadController())
+  console.log(allimages)
 }
 
 function lazyLoadController () {

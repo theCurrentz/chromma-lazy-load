@@ -55,6 +55,7 @@ function chromma_lazy_load_options() {
 
   <div class="wrap">
     <h1>Chromma Lazy Load Settings</h1>
+    <br>
       <form name="chromma-loadeffect-form" method="post" action="">
         <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y"/>
         <label><strong>Load Effect:</strong></label>&nbsp;
@@ -62,18 +63,18 @@ function chromma_lazy_load_options() {
             <option value="fadein" <?php selected( $selected_effect, 'fade-in' ); ?>>Fade-in</option>
             <option value="blur" <?php selected( $selected_effect, 'blur' ); ?>>Blur</option>
         </select>
-				<br/>
+				<br/><br/>
 				<label><strong>If using "blur" effect, please choose a low resolution thumbnail size here.</strong></label>&nbsp;
 				<select name="chromma-load-dimensions" id="chromma-load-dimensions">
 					<?php
 					foreach($all_thumbnail_sizes as $thumnail_size) {
 						$thumnail_size_dimensions= get_image_size($thumnail_size);
 						$dimensions = "-".$thumnail_size_dimensions["width"].'x'.$thumnail_size_dimensions["height"];
-						echo '<option value="'.$dimensions.'"'.	selected( $selected_dimension, $dimensions ) .'>'.$thumnail_size.'  W: '.$thumnail_size_dimensions["width"].'  H: '.$thumnail_size_dimensions["height"].'</option>';
+						echo '<option value="'.$thumnail_size.'"'.	selected( $selected_dimension, $thumnail_size ) .'>'.$thumnail_size.'  W: '.$thumnail_size_dimensions["width"].'  H: '.$thumnail_size_dimensions["height"].'</option>';
 					}
 					?>
 				</select>
-        <br/>
+        <br/><br/>
         <label><strong>Please choose an image dimension which will be used as the global apsect ratio setting.</strong></label>&nbsp;
         <select name="chromma-load-ar" id="chromma-load-ar">
           <?php
@@ -92,7 +93,7 @@ function chromma_lazy_load_options() {
 
 <?php
 	//write scss to file based on option $selected
-	$lazyload_scss_file = plugin_dir_path( __FILE__ ) . '../assets/_lazyload.scss';
+	$lazyload_scss_file = plugin_dir_path( __FILE__ ) . '../src/_lazyload.scss';
 	$handle = fopen($lazyload_scss_file, 'w') or die('Cannot open file:  '.$lazyload_scss_file);
 	$scss_data = '';
 

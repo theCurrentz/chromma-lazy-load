@@ -1,16 +1,15 @@
 <?php
 //abstract interface for chromma lazy load
-class Chromma_Lazy_Load_Module
-{
+class Chromma_Lazy_Load_Module {
 
   public function __construct() {
   }
 
   public static function apply_aspect_ratio($img, $figure) {
-    //gather options
+    //get options
     $load_effect = get_option( 'chromma_loadeffect' );
     $lowest_dimension_mod = ($load_effect !== "fadein") ? get_option('chromma-load-dimensions') : "";
-    $aspect_ratio =  get_option('chromma-load-ar');
+    $aspect_ratio = get_option('chromma-load-ar');
     //parse out the desired dimensions and apply the dimensions as an aspect ratio to the figure
     $aspect_ratio = str_replace('x', ',', $aspect_ratio);
     $aspect_ratio = str_replace('-', '', $aspect_ratio);
@@ -68,8 +67,19 @@ class Chromma_Lazy_Load_Module
       if (!empty($imgSrcSet)) {
         $img->setAttribute('data-srcset', $imgSrcSet);
       }
-      //set img src to a blank transparent gif
-      $img->setAttribute('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+
+      //get options
+      $load_effect = get_option( 'chromma_loadeffect' );
+      $lowest_dimension_mod = ($load_effect !== "fadein") ? get_option('chromma-load-dimensions') : "";
+      //set img src to a blank transparent gif or low res blur
+      if($load_effect === "blur") {
+        global $wpdb;
+        $attachment_id = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $imgSrc))[0];
+        $img_blur = wp_get_attachment_image_src($attachment_id, $lowest_dimension_mod)[0];
+        $img->setAttribute('src', $img_blur);
+      } else {
+        $img->setAttribute('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+      }
       $imgClasses = $img->getAttribute('class') . ' lazyload-img llreplace';
       $img->setAttribute('class', $imgClasses);
 
