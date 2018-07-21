@@ -166,6 +166,7 @@ function chromma_lazy_load_options() {
         position: relative;
         background: whitesmoke;
         img {
+          object-fit: cover;
           display: block;
           margin: 0px auto;
           width: 100%;

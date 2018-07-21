@@ -1,24 +1,26 @@
-# chromma-lazy-load
-PHP &amp; Javascript component that provides an elegant lazy loading image solution. Inspired by Medium, Spotify and Google Images.
+# Chroma PWA Loading
+PHP, Javascript & SASS component that provides an elegant PWA image loading solution. Inspired by Medium, Spotify and Google Images.
 
-### Using PHP filter
+### Usage
+#### PHP
 ```
-if (class_exists('Chromma_Lazy_Load_Module'))
-{
+if (class_exists('Chromma_Lazy_Load_Module')) {
   add_filter( 'the_content', 'Chromma_Lazy_Load_Module::content_lazyload_filter' );
 }
 ```
+#### HTML / PHP
+ ```
+ <img class="llreplace" />
+ ```
 
+#### JS Build
 
-### Using JS
-The included js will fire on any image where the llreplace css class exists, therefore the developer can apply this class at their discretion.
-The included js is not automatically enqueued, therefore the developer will have to pull it into their workflow however they choose.
-#### e.g. gulp:
+##### e.g. gulp:
 ```
 const lazyload = '../../plugins/chromma-lazy-load/assets/lazy-load.js';
 gulp.task('js', function() {
     return gulp
-        .src([lazyload, jQuery, './js/script.js'])
+        .src([lazyload, './js/script.js'])
         .pipe(concat('myscript.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./assets/js/'));

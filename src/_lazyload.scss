@@ -1,13 +1,14 @@
 .lazyload-img {
-			will-change: transform, opacity, filter;
-			perspective: 1000;
-			backface-visibility: hidden;
-			-webkit-backface-visibility: hidden;
-			-webkit-transform: translate3d(0, 0, 0);
-			transform: translate3d(0, 0, 0);
-			-webkit-transform-style: preserve-3d;
-			image-rendering: -webkit-optimize-contrast;
-		}
+  object-fit: cover;
+	will-change: transform, opacity, filter;
+	perspective: 1000;
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+	-webkit-transform-style: preserve-3d;
+	image-rendering: -webkit-optimize-contrast;
+}
 
 		//lazy load blur
 		.llreplace {
