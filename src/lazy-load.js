@@ -1,9 +1,7 @@
 // fire when dom content is loaded
-console.log("TEST")
 if(document.getElementsByClassName('llreplace').length > 0) {
   var allimages = document.getElementsByClassName('llreplace')
   allimages[allimages.length - 1].addEventListener('load', lazyLoadController())
-  console.log(allimages)
 }
 
 function lazyLoadController () {
@@ -53,10 +51,6 @@ function lazyLoadImage (element) {
     element.setAttribute('src', element.getAttribute('data-src'))
     element.removeAttribute('data-src')
   }
-  // use below code if using a container e.g. figure
-  // element.style.position = "relative";
-  // element.style.height = "auto";
-  // element.parentNode.style.height = "auto";
-  // element.parentNode.style.paddingBottom = "0px";
+
   if (element.classList) { element.classList.add('reveal') }
 }

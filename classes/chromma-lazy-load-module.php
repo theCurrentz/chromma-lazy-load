@@ -23,7 +23,7 @@ class Chromma_Lazy_Load_Module {
     if($aspectRatio > 80 ) {
        $img->setAttribute('style', 'position: relative');
     }
-    $aspectThresholdfix = ($aspectRatio > 58 && !($figure->getAttribute('class') )) ? 'height: auto; padding: 0px; max-height: '.$height.'px; max-width: '.$width.'px;' : 'padding-bottom: '. $aspectRatio .'%;';
+    $aspectThresholdfix = ($aspectRatio > 60 && !($figure->getAttribute('class') )) ? 'padding-bottom: '. $aspectRatio .'%;' : 'padding-bottom: '. $aspectRatio .'%;';
     $styles = $aspectThresholdfix;
     $figure->setAttribute('style', $styles);
   }
@@ -58,7 +58,7 @@ class Chromma_Lazy_Load_Module {
         self::apply_aspect_ratio($img, $figure);
       } else {
         list($width_full, $height_full) = getimagesize($img->getAttribute('src'));
-        $aspectRatio_full = ( $height_full > 0 && $width_full > 0) ? ($height_full / $width_full) * 100 : auto;
+        $aspectRatio_full = ( $height_full > 0 && $width_full > 0) ? ($height_full / $width_full) * 100 : 60;
         $figure->setAttribute('style', "padding-bottom: " . $aspectRatio_full . "%");
       }
 
