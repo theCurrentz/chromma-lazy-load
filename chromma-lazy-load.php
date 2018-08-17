@@ -10,6 +10,8 @@ NOT LICENSED
 
 //require lazy load abstract class
 require_once( plugin_dir_path( __FILE__ ) . '/classes/chromma-lazy-load-module.php');
+//require caption override
+require_once( plugin_dir_path( __FILE__ ) . '/includes/caption_shortcode_override.php');
 
 //require lazy load admin page
 require_once( plugin_dir_path( __FILE__ ) . '/includes/chromma_lazy_load_admin_page.php');
