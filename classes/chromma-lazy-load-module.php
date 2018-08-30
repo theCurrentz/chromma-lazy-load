@@ -20,12 +20,11 @@ class Chromma_Lazy_Load_Module {
     $aspectRatio = ($height > 0 && $width > 0) ? ($height / $width) * 100 : 101;
 
     //if aspect ratio is larger than desired, we'll fallback to a figure/img relationship w/o a set aspec ratio
-    if($aspectRatio > 80 ) {
+    if($aspectRatio > 100 )
        $img->setAttribute('style', 'position: relative');
-    }
-    $aspectThresholdfix = ($aspectRatio > 60 && !($figure->getAttribute('class') )) ? 'padding-bottom: '. $aspectRatio .'%;' : 'padding-bottom: '. $aspectRatio .'%;';
-    $styles = $aspectThresholdfix;
-    $figure->setAttribute('style', $styles);
+
+    $aspectRatio = 'padding-bottom: '. $aspectRatio .'%;';
+    $figure->setAttribute('style', $aspectRatio);
   }
 
   public static function content_lazyload_filter( $content ) {
@@ -41,30 +40,40 @@ class Chromma_Lazy_Load_Module {
     //xpath query targets all images that are children of the div css class entry-content
     $unwrappedImgs = $xpath->query("//img");
     foreach ($unwrappedImgs as $img) {
+      //get attrobite data
+      $imgSrc = $img->getAttribute('src');
+      $imgSrcSet = $img->getAttribute('srcset');
+      $imgClasses = (string)$img->getAttribute('class');
+
       //create a figure & set class to entry-content_figure
-      if (!($img->parentNode->nodeName == 'figure')) {
+      if (($img->parentNode->nodeName != 'figure') && (strpos($imgClasses,'aalb-pa-product-image-source') <= -1)  && (strpos($imgSrc,'amazon-adsystem') <= -1)) {
         $figure = $dom->createElement('figure');
         $figure->setAttribute('class','entry-content_figure');
         //replace $img with wrapper figure then appendChild the $img back into the figure
         $img->parentNode->replaceChild($figure, $img);
         $figure->appendChild($img);
-      } else {
+      } else
         $figure = $img->parentNode;
-      }
 
       //check for exemptions
-      $imgClasses = (string)$img->getAttribute('class');
-      if (strpos($imgClasses,'size-full') == false) {
+      if ( strpos($imgClasses,'aalb-pa-product-image-source') > -1 || strpos($imgSrc,'amazon-adsystem') > -1) {
+        continue;
+      } elseif (strpos($imgClasses,'size-full') < 0) {
+        echo strpos($imgClasses,'size-full');
         self::apply_aspect_ratio($img, $figure);
       } else {
         list($width_full, $height_full) = getimagesize($img->getAttribute('src'));
-        $aspectRatio_full = ( $height_full > 0 && $width_full > 0) ? ($height_full / $width_full) * 100 : 60;
-        $figure->setAttribute('style', "padding-bottom: " . $aspectRatio_full . "%");
+        if ( $height_full > 0 && $width_full > 0) {
+          $aspectRatio_full = 'padding-bottom: ' . ($height_full / $width_full) * 100  ."%";
+          $figure->setAttribute('style', $aspectRatio_full);
+        } else {
+          $figure->setAttribute('style', 'position: relative; padding-bottom: 0px; height: auto;');
+          $img->setAttribute('style', 'position: relative; height: auto;');
+        }
       }
 
       //set img src/datasrc for lazyload handling
-      $imgSrc = $img->getAttribute('src');
-      $imgSrcSet = $img->getAttribute('srcset');
+
       $img->removeAttribute('srcset');
       $img->setAttribute('data-src', $imgSrc);
       if (!empty($imgSrcSet)) {

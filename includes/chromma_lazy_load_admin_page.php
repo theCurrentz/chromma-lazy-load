@@ -162,10 +162,10 @@ function chromma_lazy_load_options() {
   $scss_data = $scss_data . '.entry-content_figure {
         width: 100%;
         height: auto;
-        margin: 8px auto 18px;
+        margin: 10px auto 20px;
         position: relative;
-        background: whitesmoke;
         img {
+          overflow: hidden;
           object-fit: cover;
           display: block;
           margin: 0px auto;
@@ -178,30 +178,23 @@ function chromma_lazy_load_options() {
           left: 0px;
           right: 0px;
           top: 0px;
-          bottom: 0px;
+          z-index: 1;
           color: #fff;
           font-size: 1rem;
           text-align: center;
         }
       }
       .fig-wcaption {
-        overflow: hidden;
-        max-width: '.$width.'px;
-        max-height: calc('.$height.'px - 22px);
-        background: whitesmoke;
-        img {
-          position: relative;
-          height: auto;
+        max-height: 100%;
+        .figcaption {
+          color: $light-grey;
+          font-size: .782rem;
+          width: 100%;
+          padding: 8px 2% 0px;
+          margin: 0px;
+          min-height: 30px;
+          background: #fff;
         }
-      }
-      .figcaption {
-        color: $light-grey;
-        font-size: .782rem;
-        width: 100%;
-        padding: 8px 2% 0px;
-        margin: 0px;
-        min-height: 30px;
-        background: #fff;
       }';
 	fwrite($handle, $scss_data);
 	fclose($handle);
