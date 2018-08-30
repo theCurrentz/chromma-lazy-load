@@ -92,110 +92,113 @@ function chromma_lazy_load_options() {
   </div>
 
 <?php
-	//write scss to file based on option $selected
-	$lazyload_scss_file = plugin_dir_path( __DIR__ ) . 'src/_lazyload.scss';
-	$handle = fopen($lazyload_scss_file, 'w') or die('Cannot open file:  '.$lazyload_scss_file);
-	$scss_data = '';
+//write scss to file based on option $selected
+$lazyload_scss_file = plugin_dir_path( __DIR__ ) . 'src/_lazyload.scss';
+$handle = fopen($lazyload_scss_file, 'w') or die('Cannot open file:  '.$lazyload_scss_file);
+$scss_data = '';
 
-  //parse out the desired dimensions and apply the dimensions as an aspect ratio to the figure
-  $aspect_ratio = get_option('chromma-load-ar');
-  $aspect_ratio = str_replace('x', ',', $aspect_ratio);
-  $aspect_ratio = str_replace('-', '', $aspect_ratio);
-  $aspect_ratio_array = explode(',', $aspect_ratio);
-  $width = $aspect_ratio_array[0];
-  $height = $aspect_ratio_array[1];
+//parse out the desired dimensions and apply the dimensions as an aspect ratio to the figure
+$aspect_ratio = get_option('chromma-load-ar');
+$aspect_ratio = str_replace('x', ',', $aspect_ratio);
+$aspect_ratio = str_replace('-', '', $aspect_ratio);
+$aspect_ratio_array = explode(',', $aspect_ratio);
+$width = $aspect_ratio_array[0];
+$height = $aspect_ratio_array[1];
 
-	if(get_option('chromma_loadeffect') == 'fadein')
-	{
-		$scss_data = '.lazyload-img {
-			opacity: 0;
-			will-change: transform, opacity, filter;
-			perspective: 1000;
-			backface-visibility: hidden;
-			-webkit-backface-visibility: hidden;
-			-webkit-transform: translate3d(0, 0, 0);
-			transform: translate3d(0, 0, 0);
-			-webkit-transform-style: preserve-3d;
-			image-rendering: -webkit-optimize-contrast;
-		}
-
-		//lazy load fade in
-		.llreplace {
-			opacity: 0;
-		}
-		.reveal {
-			transition: opacity .8s ease-out;
-			opacity: 1;
-		}';
+if(get_option('chromma_loadeffect') == 'fadein') {
+	$scss_data = '.lazyload-img {
+		opacity: 0;
+		will-change: transform, opacity, filter;
+		perspective: 1000;
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+		-webkit-transform-style: preserve-3d;
+		image-rendering: -webkit-optimize-contrast;
 	}
-	elseif(get_option('chromma_loadeffect') == 'blur')
-	{
-		$scss_data = '.lazyload-img {
-			will-change: transform, opacity, filter;
-			perspective: 1000;
-			backface-visibility: hidden;
-			-webkit-backface-visibility: hidden;
-			-webkit-transform: translate3d(0, 0, 0);
-			transform: translate3d(0, 0, 0);
-			-webkit-transform-style: preserve-3d;
-			image-rendering: -webkit-optimize-contrast;
-		}
 
-		//lazy load blur
-		.llreplace {
-			filter: blur(2vw);
-			-webkit-filter: blur(2vw);
-		}
-		.reveal {
-			filter: opacity(1) !important;
-			-webkit-filter: opacity(1) !important;
-			animation-fill-mode: forwards;
-			animation-iteration-count: 1;
-			animation: reveal .6s ease-out;
-		}
-
-		@keyframes reveal {
-			0% {filter: blur(2vw); -webkit-filter: blur(2vw);}
-			100% {filter: blur(0); -webkit-filter: blur(0);}
-		}';
+	//lazy load fade in
+	.llreplace {
+		opacity: 0;
 	}
-  $scss_data = $scss_data . '.entry-content_figure {
+	.reveal {
+		transition: opacity .8s ease-out;
+		opacity: 1;
+	}';
+} elseif(get_option('chromma_loadeffect') == 'blur') {
+	$scss_data = '.lazyload-img {
+		will-change: transform, opacity, filter;
+		perspective: 1000;
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+		-webkit-transform-style: preserve-3d;
+		image-rendering: -webkit-optimize-contrast;
+	}
+
+	//lazy load blur
+	.llreplace {
+		filter: blur(2vw);
+		-webkit-filter: blur(2vw);
+	}
+	.reveal {
+		filter: opacity(1) !important;
+		-webkit-filter: opacity(1) !important;
+		animation-fill-mode: forwards;
+		animation-iteration-count: 1;
+		animation: reveal .6s ease-out;
+	}
+
+	@keyframes reveal {
+		0% {filter: blur(2vw); -webkit-filter: blur(2vw);}
+		100% {filter: blur(0); -webkit-filter: blur(0);}
+	}';
+}
+$scss_data = $scss_data . '.entry-content_figure {
+      width: 100%;
+      height: auto;
+      margin: 10px auto 20px;
+      position: relative;
+      img {
+        overflow: hidden;
+        object-fit: cover;
+        display: block;
+        margin: 0px auto;
         width: 100%;
-        height: auto;
-        margin: 10px auto 20px;
-        position: relative;
-        img {
-          overflow: hidden;
-          object-fit: cover;
-          display: block;
-          margin: 0px auto;
-          width: 100%;
-          height: 100%;
-          max-width: 100%;
-          max-height: 100%;
-          position: absolute;
-          z-index: 1;
-          left: 0px;
-          right: 0px;
-          top: 0px;
-          z-index: 1;
-          color: #fff;
-          font-size: 1rem;
-          text-align: center;
-        }
-      }
-      .fig-wcaption {
+        height: 100%;
+        max-width: 100%;
         max-height: 100%;
-        .figcaption {
-          color: $light-grey;
-          font-size: .782rem;
-          width: 100%;
-          padding: 8px 2% 0px;
-          margin: 0px;
-          min-height: 30px;
-          background: #fff;
-        }
-      }';
-	fwrite($handle, $scss_data);
-	fclose($handle);
+        position: absolute;
+        z-index: 1;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        z-index: 1;
+        color: #fff;
+        font-size: 1rem;
+        text-align: center;
+      }
+    }
+    .fig-wcaption {
+      max-height: 100%;
+      img {
+        height: calc(100% - 36px);
+      }
+      .figcaption {
+        position: absolute;
+        bottom: 0px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 0px 2%;
+        margin: 0px;
+        min-height: 36px;
+        color: #929292;
+        font-size: .782rem;
+      }
+    }';
+fwrite($handle, $scss_data);
+fclose($handle);
 }

@@ -44,7 +44,6 @@ class Chromma_Lazy_Load_Module {
       $imgSrc = $img->getAttribute('src');
       $imgSrcSet = $img->getAttribute('srcset');
       $imgClasses = (string)$img->getAttribute('class');
-
       //create a figure & set class to entry-content_figure
       if (($img->parentNode->nodeName != 'figure') && (strpos($imgClasses,'aalb-pa-product-image-source') <= -1)  && (strpos($imgSrc,'amazon-adsystem') <= -1)) {
         $figure = $dom->createElement('figure');
@@ -59,8 +58,9 @@ class Chromma_Lazy_Load_Module {
       if ( strpos($imgClasses,'aalb-pa-product-image-source') > -1 || strpos($imgSrc,'amazon-adsystem') > -1) {
         continue;
       } elseif (strpos($imgClasses,'size-full') < 0) {
-        echo strpos($imgClasses,'size-full');
         self::apply_aspect_ratio($img, $figure);
+      } elseif(strpos($img->parentNode->getAttribute('class'), 'fig-wcaption') > -1)  {
+        continue;
       } else {
         list($width_full, $height_full) = getimagesize($img->getAttribute('src'));
         if ( $height_full > 0 && $width_full > 0) {
@@ -73,7 +73,6 @@ class Chromma_Lazy_Load_Module {
       }
 
       //set img src/datasrc for lazyload handling
-
       $img->removeAttribute('srcset');
       $img->setAttribute('data-src', $imgSrc);
       if (!empty($imgSrcSet)) {
@@ -104,6 +103,5 @@ class Chromma_Lazy_Load_Module {
     $content = preg_replace('/^<!DOCTYPE.+?>/','',str_replace(array('<html>', '</html>', '<body>', '</body>'),array('', '', '', ''),$dom->saveHTML()));
     return $content;
   }
-
 
 } //end Chromma_Lazy_Load_Module

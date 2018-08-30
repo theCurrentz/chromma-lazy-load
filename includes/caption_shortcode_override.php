@@ -44,6 +44,6 @@ function chroma_img_caption_shortcode( $empty, $attr, $content ) {
   }
 
   $new_caption = (!empty($caption_link)) ? '<a href="'.$caption_link.'" target="_blank" rel="noopener" >' . trim($caption) . '</a>' : trim($caption);
-  $new_content = '<figure class="entry-content_figure fig-wcaption" style="padding-bottom:'.$aspectRatio.'%">'.$image.'<figcaption class="figcaption">'.$new_caption.'</figcaption></figure>';
+  $new_content = '<figure class="entry-content_figure fig-wcaption" style="padding-bottom:calc('.$aspectRatio.'% + 36px">'.$image.'<figcaption class="figcaption">'.$new_caption.'</figcaption></figure>';
 	return $new_content;
 }
